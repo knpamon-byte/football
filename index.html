@@ -1,12 +1,672 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="th">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Arsenal FC - ประวัติศาสตร์และความสำเร็จ (The Gunners)</title>
+    <!-- เรียกใช้ Google Fonts ภาษาไทย (Kanit & Sarabun) เพื่อการอ่านที่สบายตาและทันสมัย -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600;700&family=Sarabun:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ==========================================================================
+           1. CSS Variables (กำหนดโทนสีหลักของสโมสรอาร์เซนอล เพื่อให้ง่ายต่อการแก้ไข)
+           ========================================================================== */
+        :root {
+            --arsenal-red: #EF0107;       /* สีแดงหลักของอาร์เซนอล */
+            --arsenal-dark-red: #9C0004;  /* สีแดงเข้มสำหรับ Hover หรือเน้นขอบ */
+            --arsenal-navy: #063672;      /* สีกรมท่า (สีรองคลาสสิก) */
+            --arsenal-gold: #9C824A;      /* สีทอง (สื่อถึงถ้วยแชมป์ไร้พ่ายและตราสโมสร) */
+            --bg-light: #F8F9FA;          /* สีพื้นหลังสว่าง สบายตา */
+            --bg-white: #FFFFFF;          /* สีขาวบริสุทธิ์สำหรับการ์ดและแถบเมนู */
+            --text-dark: #1E293B;         /* สีตัวอักษรหลัก (เข้มแต่ไม่ดำสนิท ลดความล้าสายตา) */
+            --text-muted: #64748B;        /* สีตัวอักษรรอง */
+            --border-radius: 12px;        /* ความโค้งมนตามหลัก Modern UI */
+            --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        /* ==========================================================================
+           2. Reset & Base Styles (ตั้งค่าพื้นฐานและการเลื่อนหน้าจอแบบนุ่มนวล)
+           ========================================================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth; /* ทำให้เวลาคลิกลิงก์เมนูแล้วเลื่อนลงอย่างนุ่มนวล */
+            scroll-padding-top: 80px; /* เว้นระยะด้านบนไม่ให้ Navbar บังหัวข้อ */
+        }
+
+        body {
+            font-family: 'Sarabun', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.7;
+        }
+
+        h1, h2, h3, h4, .nav-brand, .btn {
+            font-family: 'Kanit', sans-serif;
+        }
+
+        /* ==========================================================================
+           3. Navigation Bar (เมนูนำทางด้านบน ติดหนึบเวลาเลื่อนจอ)
+           ========================================================================== */
+        header {
+            background-color: var(--bg-white);
+            box-shadow: var(--shadow-sm);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 3px solid var(--arsenal-red);
+        }
+
+        .navbar {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--arsenal-red);
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-brand span.badge {
+            background-color: var(--arsenal-navy);
+            color: var(--bg-white);
+            font-size: 0.75rem;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: 400;
+        }
+
+        .nav-menu {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 600;
+            font-size: 1.05rem;
+            position: relative;
+            padding: 0.5rem 0;
+            transition: var(--transition);
+        }
+
+        /* เอฟเฟกต์เส้นใต้เวลาเอาเมาส์ชี้เมนู */
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 3px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--arsenal-red);
+            transition: var(--transition);
+        }
+
+        .nav-menu a:hover {
+            color: var(--arsenal-red);
+        }
+
+        .nav-menu a:hover::after {
+            width: 100%;
+        }
+
+        /* ==========================================================================
+           4. Hero Section (แบนเนอร์ต้อนรับขนาดใหญ่ ดึงดูดสายตา)
+           ========================================================================== */
+        .hero {
+            background: linear-gradient(135deg, var(--arsenal-red) 0%, var(--arsenal-dark-red) 60%, var(--arsenal-navy) 100%);
+            color: var(--bg-white);
+            padding: 6rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-subtitle {
+            color: #FDE047;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .hero h1 {
+            font-size: 3.2rem;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.95;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.85rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background-color: var(--bg-white);
+            color: var(--arsenal-red);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--arsenal-gold);
+            color: var(--bg-white);
+            transform: translateY(-3px);
+        }
+
+        /* ==========================================================================
+           5. Container & Section Common Styles
+           ========================================================================== */
+        .container {
+            max-width: 1140px;
+            margin: 0 auto;
+            padding: 4.5rem 2rem;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3.5rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.2rem;
+            color: var(--arsenal-navy);
+            margin-bottom: 0.5rem;
+        }
+
+        .section-header .divider {
+            width: 70px;
+            height: 4px;
+            background-color: var(--arsenal-red);
+            margin: 0 auto 1rem;
+            border-radius: 2px;
+        }
+
+        .section-header p {
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* ==========================================================================
+           6. History Section (ประวัติการก่อตั้งทีม + ระบบคลิกอ่านเพิ่มเติมแบบ Expandable)
+           ========================================================================== */
+        .history-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background: var(--bg-white);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            box-shadow: var(--shadow-sm);
+            border-top: 4px solid var(--arsenal-red);
+            transition: var(--transition);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .card-year {
+            display: inline-block;
+            background-color: rgba(239, 1, 7, 0.1);
+            color: var(--arsenal-red);
+            font-family: 'Kanit', sans-serif;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .card h3 {
+            font-size: 1.4rem;
+            color: var(--arsenal-navy);
+            margin-bottom: 1rem;
+        }
+
+        /* ใช้แท็ก <details> และ <summary> ของ HTML5 เพื่อสร้างปุ่มคลิกอ่านเพิ่มเติมโดยไม่ต้องพึ่ง JS ซับซ้อน */
+        details {
+            margin-top: 1.2rem;
+            border-top: 1px solid #E2E8F0;
+            padding-top: 1rem;
+        }
+
+        summary {
+            font-family: 'Kanit', sans-serif;
+            color: var(--arsenal-red);
+            font-weight: 600;
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: var(--transition);
+        }
+
+        summary::-webkit-details-marker {
+            display: none;
+        }
+
+        summary::after {
+            content: 'อ่านเพิ่มเติม +';
+            font-size: 0.85rem;
+            background: var(--bg-light);
+            padding: 4px 10px;
+            border-radius: 6px;
+        }
+
+        details[open] summary::after {
+            content: 'ย่อเนื้อหา -';
+            background: var(--arsenal-red);
+            color: white;
+        }
+
+        .more-content {
+            margin-top: 1rem;
+            padding: 1rem;
+            background-color: var(--bg-light);
+            border-radius: 8px;
+            font-size: 0.95rem;
+            color: var(--text-dark);
+            border-left: 3px solid var(--arsenal-gold);
+        }
+
+        /* ==========================================================================
+           7. Achievements Section (ผลงานตั้งแต่อดีตจนถึงปัจจุบัน)
+           ========================================================================== */
+        .achievements-bg {
+            background-color: var(--bg-white);
+            border-top: 1px solid #E2E8F0;
+            border-bottom: 1px solid #E2E8F0;
+        }
+
+        .trophy-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-box {
+            background: linear-gradient(145deg, var(--arsenal-navy), #0A4A9C);
+            color: var(--bg-white);
+            padding: 2rem 1.5rem;
+            border-radius: var(--border-radius);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-box.gold-highlight {
+            background: linear-gradient(145deg, var(--arsenal-gold), #B89B5E);
+        }
+
+        .stat-number {
+            font-family: 'Kanit', sans-serif;
+            font-size: 3rem;
+            font-weight: 700;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1.05rem;
+            font-weight: 600;
+        }
+
+        .timeline-list {
+            max-width: 850px;
+            margin: 0 auto;
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            background: var(--bg-light);
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            border-left: 5px solid var(--arsenal-navy);
+        }
+
+        .timeline-era {
+            min-width: 130px;
+            font-family: 'Kanit', sans-serif;
+            font-weight: 700;
+            color: var(--arsenal-red);
+            font-size: 1.1rem;
+        }
+
+        /* ==========================================================================
+           8. Author & Developer Contact Section (ส่วนติดต่อผู้พัฒนาและรายชื่อผู้เขียน)
+           ========================================================================== */
+        .developer-card {
+            background: linear-gradient(to right, var(--arsenal-navy), #04234B);
+            color: var(--bg-white);
+            border-radius: var(--border-radius);
+            padding: 3rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 2rem;
+            box-shadow: var(--shadow-md);
+            border-bottom: 5px solid var(--arsenal-gold);
+        }
+
+        .dev-info h3 {
+            color: var(--arsenal-gold);
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+
+        .dev-info h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .dev-info p {
+            opacity: 0.9;
+            max-width: 550px;
+        }
+
+        .contact-box {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem 2rem;
+            border-radius: var(--border-radius);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            min-width: 280px;
+        }
+
+        .line-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background-color: #06C755; /* สีเขียวมาตรฐานของ LINE เพื่อ UX ที่คุ้นเคย */
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-family: 'Kanit', sans-serif;
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-top: 0.75rem;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .line-badge:hover {
+            background-color: #05B34C;
+            transform: scale(1.03);
+        }
+
+        /* ==========================================================================
+           9. Footer (ส่วนท้ายเว็บไซต์)
+           ========================================================================== */
+        footer {
+            background-color: #0F172A;
+            color: #94A3B8;
+            text-align: center;
+            padding: 2.5rem 1rem;
+            font-size: 0.95rem;
+        }
+
+        footer strong {
+            color: var(--bg-white);
+        }
+
+        /* ==========================================================================
+           10. Responsive Design (รองรับการแสดงผลบนมือถือและแท็บเล็ต)
+           ========================================================================== */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .nav-menu {
+                gap: 1.2rem;
+                font-size: 0.95rem;
+            }
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            .timeline-item {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            .developer-card {
+                padding: 2rem;
+            }
+        }
+    </style>
 </head>
 <body>
-    <h1>welcome to MyWebsite</h1>
-    <h2>pamontita prisan </h2>
+
+    <!-- ================= HEADER & NAVIGATION ================= -->
+    <header>
+        <nav class="navbar" aria-label="เมนูหลัก">
+            <a href="#home" class="nav-brand">
+                <span>ARSENAL FC</span>
+                <span class="badge">VICTORIA CONCORDIA CRESCIT</span>
+            </a>
+            <ul class="nav-menu">
+                <li><a href="#home">หน้าแรก</a></li>
+                <li><a href="#history">ประวัติการก่อตั้ง</a></li>
+                <li><a href="#achievements">ผลงานและความสำเร็จ</a></li>
+                <li><a href="#developer">ผู้พัฒนาและติดต่อ</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- ================= HERO BANNER ================= -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <span class="hero-subtitle">THE GUNNERS • EST. 1886</span>
+            <h1>ตำนานแห่งปืนใหญ่<br>สโมสรฟุตบอลอาร์เซนอล</h1>
+            <p>เจาะลึกเรื่องราวการเดินทางกว่าศตวรรษ จากโรงงานผลิตอาวุธในย่านวูลวิช สู่ความยิ่งใหญ่ระดับตำนานไร้พ่ายแห่งพรีเมียร์ลีกอังกฤษ</p>
+            <a href="#history" class="btn btn-primary">สำรวจประวัติศาสตร์สโมสร</a>
+        </div>
+    </section>
+
+    <!-- ================= HISTORY SECTION ================= -->
+    <main>
+        <section id="history" class="container">
+            <div class="section-header">
+                <h2>ประวัติการก่อตั้งทีม</h2>
+                <div class="divider"></div>
+                <p>จุดเริ่มต้นจากกลุ่มคนงานโรงงานผลิตอาวุธ สู่หนึ่งในสโมสรฟุตบอลที่ทรงอิทธิพลและมีเอกลักษณ์มากที่สุดในโลก</p>
+            </div>
+
+            <div class="history-grid">
+                <!-- การ์ดที่ 1 -->
+                <article class="card">
+                    <span class="card-year">ค.ศ. 1886</span>
+                    <h3>จุดกำเนิด "ไดอัล สแควร์"</h3>
+                    <p>สโมสรก่อตั้งขึ้นในปลายปี 1886 โดยกลุ่มคนงานของโรงงานผลิตอาวุธหลวง (Royal Arsenal) ในย่านวูลวิช ทางตะวันออกเฉียงใต้ของลอนดอน ภายใต้ชื่อแรกเริ่มว่า <strong>Dial Square</strong></p>
+                    
+                    <details>
+                        <summary>เจาะลึกรายละเอียด</summary>
+                        <div class="more-content">
+                            <p>นำโดย เดวิด แดนสกิน (David Danskin) วิศวกรชาวสกอตแลนด์ และ แจ็ค ฮัมเบิล พวกเขารวบรวมเงินคนละเล็กคนละน้อยเพื่อซื้อลูกฟุตบอลลูกแรก ก่อนจะเปลี่ยนชื่อเป็น <strong>Royal Arsenal</strong> ในเวลาต่อมา และเข้าสู่ระบบฟุตบอลอาชีพในปี 1891 ในชื่อ <strong>Woolwich Arsenal</strong></p>
+                        </div>
+                    </details>
+                </article>
+
+                <!-- การ์ดที่ 2 -->
+                <article class="card">
+                    <span class="card-year">ค.ศ. 1913</span>
+                    <h3>การย้ายสู่ลอนดอนเหนือ (ไฮบิวรี่)</h3>
+                    <p>เนื่องจากปัญหาทางการเงินและทำเลที่ตั้งเดิมเข้าถึงยาก เฮนรี นอร์ริส ประธานสโมสรในขณะนั้น จึงตัดสินใจย้ายสนามเหย้าข้ามแม่น้ำเทมส์มายังย่านไฮบิวรี่ ทางตอนเหนือของลอนดอน</p>
+                    
+                    <details>
+                        <summary>เจาะลึกรายละเอียด</summary>
+                        <div class="more-content">
+                            <p>การย้ายมาที่สนามไฮบิวรี่ (Highbury) ทำให้สโมสรตัดคำว่า "Woolwich" ออก เหลือเพียงชื่อ <strong>The Arsenal</strong> และกลายมาเป็น <strong>Arsenal</strong> อย่างเป็นทางการ จุดนี้เองที่เป็นต้นกำเนิดของ "นอร์ธ ลอนดอน ดาร์บี้" คู่ปรับตลอดกาลกับท็อตแน่ม ฮ็อทสเปอร์</p>
+                        </div>
+                    </details>
+                </article>
+
+                <!-- การ์ดที่ 3 -->
+                <article class="card">
+                    <span class="card-year">ค.ศ. 1925 - 1934</span>
+                    <h3>ยุคปฏิวัติของ เฮอร์เบิร์ต แชปแมน</h3>
+                    <p>การเข้ามาคุมทีมของ เฮอร์เบิร์ต แชปแมน คือจุดเปลี่ยนสำคัญที่ทำให้อาร์เซนอลก้าวขึ้นมาเป็นมหาอำนาจลูกหนังอังกฤษ พร้อมสร้างนวัตกรรมใหม่ๆ ให้วงการฟุตบอล</p>
+                    
+                    <details>
+                        <summary>เจาะลึกรายละเอียด</summary>
+                        <div class="more-content">
+                            <p>แชปแมนเป็นผู้คิดค้นแผนการเล่นระบบ <strong>WM Formation</strong> การติดหมายเลขบนเสื้อนักเตะ การใช้ไฟสปอร์ตไลท์ รวมถึงการเพิ่มแขนเสื้อสีขาวตัดกับตัวเสื้อสีแดงอันเป็นเอกลักษณ์มาจนถึงปัจจุบัน และพาทีมคว้าแชมป์ลีกสูงสุดสมัยแรกได้สำเร็จในปี 1931</p>
+                        </div>
+                    </details>
+                </article>
+            </div>
+        </section>
+
+        <!-- ================= ACHIEVEMENTS SECTION ================= -->
+        <section id="achievements" class="achievements-bg">
+            <div class="container">
+                <div class="section-header">
+                    <h2>ผลงานตั้งแต่อดีตจนถึงปัจจุบัน</h2>
+                    <div class="divider"></div>
+                    <p>เกียรติประวัติและถ้วยรางวัลแห่งความภาคภูมิใจของเหล่า "เดอะ กันเนอร์ส"</p>
+                </div>
+
+                <!-- สถิติถ้วยรางวัลสำคัญ -->
+                <div class="trophy-stats">
+                    <div class="stat-box">
+                        <div class="stat-number">13</div>
+                        <div class="stat-label">แชมป์ลีกสูงสุดอังกฤษ</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number">14</div>
+                        <div class="stat-label">แชมป์ เอฟเอ คัพ (สูงสุด)</div>
+                    </div>
+                    <div class="stat-box gold-highlight">
+                        <div class="stat-number">49</div>
+                        <div class="stat-label">นัดไร้พ่าย (สถิติประวัติศาสตร์)</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number">17</div>
+                        <div class="stat-label">แชมป์คอมมูนิตี้ ชิลด์</div>
+                    </div>
+                </div>
+
+                <!-- ไทม์ไลน์ความสำเร็จแต่ละยุค -->
+                <div class="timeline-list">
+                    <div class="timeline-item">
+                        <div class="timeline-era">ยุค 1930s & 1970s</div>
+                        <div>
+                            <h4>ความยิ่งใหญ่ยุคคลาสสิกและดับเบิ้ลแชมป์ครั้งแรก</h4>
+                            <p>ครองความยิ่งใหญ่ในทศวรรษ 1930 ด้วยการคว้าแชมป์ลีก 5 สมัย และในฤดูกาล 1970–71 ภายใต้การคุมทีมของ เบอร์ตี มี อาร์เซนอลสร้างประวัติศาสตร์คว้า <strong>ดับเบิ้ลแชมป์</strong> (แชมป์ลีกและเอฟเอคัพ) ได้เป็นครั้งแรก</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-era">ยุค 1989 & 1990s</div>
+                        <div>
+                            <h4>ค่ำคืนมหัศจรรย์ที่แอนฟิลด์ (ยุค จอร์จ เกรแฮม)</h4>
+                            <p>ปี 1989 อาร์เซนอลบุกไปชนะลิเวอร์พูล 2-0 ในนาทีสุดท้ายของฤดูกาล คว้าแชมป์ลีกอย่างสุดดราม่า ก่อนจะคว้าแชมป์ยุโรป คัพ วินเนอร์ส คัพ ในปี 1994</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item" style="border-left-color: var(--arsenal-gold);">
+                        <div class="timeline-era">ยุค อาร์แซน เวนเกอร์<br>(1996–2018)</div>
+                        <div>
+                            <h4>ตำนานไร้พ่าย "The Invincibles" (2003–04)</h4>
+                            <p>อาร์แซน เวนเกอร์ ปฏิวัติสไตล์การเล่นสู่ฟุตบอลเกมรุกที่สวยงาม พาทีมคว้าแชมป์พรีเมียร์ลีก 3 สมัย โดยเฉพาะฤดูกาล <strong>2003–04 ที่คว้าแชมป์โดยไม่แพ้ใครเลยตลอด 38 นัด</strong> (ได้รับมอบถ้วยพรีเมียร์ลีกสีทองคำใบเดียวในประวัติศาสตร์) พร้อมสร้างสถิติไร้พ่ายต่อเนื่อง 49 นัด และย้ายสู่สนามเอมิเรตส์ สเตเดียม ในปี 2006</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-era">ยุคปัจจุบัน<br>(2019–ปัจจุบัน)</div>
+                        <div>
+                            <h4>การกลับมาทวงความยิ่งใหญ่ภายใต้ มิเกล อาร์เตต้า</h4>
+                            <p>มิเกล อาร์เตต้า อดีตกัปตันทีม เข้ามาฟื้นฟูสโมสรด้วยขุมกำลังสายเลือดใหม่ คว้าแชมป์เอฟเอ คัพ (2020) และคอมมูนิตี้ ชิลด์ (2020, 2023) พร้อมยกระดับทีมกลับมาลุ้นแชมป์พรีเมียร์ลีกและยูฟ่า แชมเปียนส์ลีก อย่างเต็มตัวอีกครั้ง</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= DEVELOPER & AUTHOR SECTION ================= -->
+        <section id="developer" class="container">
+            <div class="section-header">
+                <h2>คณะผู้จัดทำและติดต่อผู้พัฒนา</h2>
+                <div class="divider"></div>
+            </div>
+
+            <div class="developer-card">
+                <div class="dev-info">
+                    <h3>Web Developer & Content Author</h3>
+                    <h2>ผู้เขียนและพัฒนาเว็บไซต์ : คุณปมณฑิตา ไพรสันต์</h2>
+                    <p>ออกแบบและพัฒนาเว็บไซต์ด้วยมาตรฐาน HTML5 และ CSS3 โดยคำนึงถึงหลักการ UX/UI เพื่อให้แฟนบอลอาร์เซนอลและผู้สนใจสามารถเข้าถึงข้อมูลประวัติศาสตร์ได้อย่างสะดวก สวยงาม และอ่านง่ายในทุกอุปกรณ์</p>
+                </div>
+
+                <div class="contact-box">
+                    <p style="font-weight: 600; margin-bottom: 0.25rem;">ช่องทางการติดต่อผู้พัฒนาเว็บ</p>
+                    <p style="font-size: 0.9rem; opacity: 0.85;">สอบถามข้อมูลเพิ่มเติมหรือแจ้งปรับปรุงเว็บไซต์</p>
+                    <a href="https://line.me/ti/p/~08644626" target="_blank" rel="noopener noreferrer" class="line-badge" title="คลิกเพื่อแอดไลน์">
+                        <span>LINE ID : 08644626</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ================= FOOTER ================= -->
+    <footer>
+        <p>© 2026 เว็บไซต์ข้อมูลสโมสรฟุตบอลอาร์เซนอล (Arsenal FC Fan & History Portal)</p>
+        <p style="margin-top: 0.5rem;">พัฒนาและเขียนเนื้อหาโดย <strong>คุณปมณฑิตา ไพรสันต์</strong> | ติดต่อ Line ID: <strong>08644626</strong></p>
+    </footer>
+
 </body>
 </html>
